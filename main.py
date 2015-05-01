@@ -31,7 +31,7 @@ class Biblio(tk.Frame):
         # Frame to add books
         self.add_frame = tk.Frame(root,relief=tk.RAISED,bg='blue').grid(row=3,column=5)
         self.add_book = ttk.Button(self.add_frame,text="Add book")
-        self.add_book.grid(row=2,column=5,sticky=tk.E+tk.S)
+        self.add_book.grid(row=1,column=4,sticky=tk.E+tk.S)
 
         # Searchbar
         self.searchVar = tk.StringVar()
@@ -82,7 +82,6 @@ class Biblio(tk.Frame):
             for x in range(len(self.tree_data)):
                 if self.tree_data[x][criteria].lower().startswith(pattern):
                     found_books.append(self.tree_data[x])
-            print(found_books)
             if len(found_books) == 0:
                 found_books = (["NO BOOK WAS FOUND"])
             self.clean_tree()
@@ -99,7 +98,7 @@ class Biblio(tk.Frame):
             else:
                 self.view.insert('', 'end', values=data[x],tags=("evenrow",))
 
-    def contextual_menu_display(self,event):
+    def contextual_menu_display(self, event):
         """
         Displays a menu under cursor when right click
         is pressed over the title lisbox
