@@ -1,5 +1,5 @@
 __author__ = 'Nattefrost'
-# Listing all books i own in a tkinter interface
+# Listing all books i own using a tkinter interface
 
 import tkinter as tk
 from tkinter import ttk
@@ -8,9 +8,6 @@ from tkinter import messagebox
 import os
 import ctypes
 import db_access as db
-
-
-
 
 class biblio:
     def __init__(self):
