@@ -14,8 +14,8 @@ class biblio:
         self.root = tk.Tk()
         self.style = ttk.Style()
         self.booksList = []
-        #self.root.windowIcon = tk.PhotoImage("photo", file="./book_icon.gif") # setting icon
-        #self.root.tk.call('wm','iconphoto',self.root._w,self.root.windowIcon)
+        self.root.windowIcon = tk.PhotoImage("photo", file="./book_icon.gif") # setting icon
+        self.root.tk.call('wm','iconphoto',self.root._w,self.root.windowIcon)
         self.root.geometry('{}x{}'.format(1042,670))
         self.root['bg'] = 'slategrey'
         self.style.theme_use('clam')

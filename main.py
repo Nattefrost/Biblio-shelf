@@ -30,8 +30,27 @@ class Biblio(tk.Frame):
 
         # Frame to add books
         self.add_frame = tk.Frame(root,relief=tk.RAISED,bg='blue').grid(row=3,column=5)
-        self.add_book = ttk.Button(self.add_frame,text="Add book")
-        self.add_book.grid(row=1,column=4,sticky=tk.E+tk.S)
+        self.add_book = ttk.Button(self.treeFrame,text="Add book")
+        self.add_book.grid(row=3,column=4,sticky=tk.SW)
+        # Labels to add book
+        font = "Verdana 11"
+        self.title_label = tk.Label(self.treeFrame, text="Title",font=font,bg='lightgray',padx=10).grid(row=1,column=4,sticky=tk.N)
+        self.author_label = tk.Label(self.treeFrame, text="Author",font=font,bg='lightgray',padx=22).grid(row=1,column=5,sticky=tk.N+tk.W)
+        self.collection_label = tk.Label(self.treeFrame, text="Collection",font=font,bg='lightgray',padx=22).grid(row=1,column=6,sticky=tk.N)
+        # StringVars to add books
+        self.titleVar = tk.StringVar()
+        self.authorVar = tk.StringVar()
+        self.collectionVar = tk.StringVar()
+        self.isReadVar = tk.IntVar()
+        # Entries to add book
+        self.title_entry = ttk.Entry(self.treeFrame,textvariable=self.titleVar)
+        self.author_entry = ttk.Entry(self.treeFrame,textvariable=self.authorVar)
+        self.collection_entry = ttk.Entry(self.treeFrame,textvariable=self.collectionVar)
+        self.isRead_check = tk.Checkbutton(self.treeFrame,text="Is read?",bg="lightgray",variable=self.isReadVar)
+        self.title_entry.grid(row=1,column=4,sticky=tk.EW)
+        self.author_entry.grid(row=1,column=5,sticky=tk.EW)
+        self.collection_entry.grid(row=1,column=6,sticky=tk.EW)
+        self.isRead_check.grid(row=1,column=7,sticky=tk.EW)
 
         # Searchbar
         self.searchVar = tk.StringVar()
