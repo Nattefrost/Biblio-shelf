@@ -33,7 +33,7 @@ class Biblio(tk.Frame):
         self.insert_content(self.tree_data)
 
         # Frame to add books
-        self.add_frame = tk.Frame(root,relief=tk.RAISED,bg='blue').grid(row=3,column=5)
+        self.add_frame = tk.Frame(root,relief=tk.FLAT,bg='blue').grid(row=3,column=5)
         self.add_book = tk.Button(self.treeFrame,text="Add book")
         self.add_book.grid(row=3,column=4,sticky=tk.SW)
         # Labels to add book
