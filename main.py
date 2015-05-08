@@ -8,10 +8,14 @@ class Biblio(tk.Frame):
     def __init__(self, root ):
         tk.Frame.__init__(self, root)
         root['bg'] = 'lightgray'
-        self.tree_data = db_access.get_books_to_view()
+        root.windowIcon = tk.PhotoImage("photo", file="./book_icon.gif") # setting icon
+        root.tk.call('wm','iconphoto',root._w,root.windowIcon)
+        root['bd'] = 10
+        root['relief'] = tk.FLAT
+        root.geometry("1200x685")
         self.style = ttk.Style()
-        self.style.theme_use('clam')
-        root.geometry("1024x680")
+        self.style.theme_use('alt')
+        self.tree_data = db_access.get_books_to_view()
         self.treeFrame = tk.Frame(root,relief=tk.FLAT).grid(row=0,column=0)
         self.view = ttk.Treeview(self.treeFrame,height=27,columns=("id","Title","Author","Collection"),selectmode='browse',displaycolumns=[0,1,2,3])
         self.view['show'] = 'headings' #removes first empty column
@@ -30,27 +34,27 @@ class Biblio(tk.Frame):
 
         # Frame to add books
         self.add_frame = tk.Frame(root,relief=tk.RAISED,bg='blue').grid(row=3,column=5)
-        self.add_book = ttk.Button(self.treeFrame,text="Add book")
+        self.add_book = tk.Button(self.treeFrame,text="Add book")
         self.add_book.grid(row=3,column=4,sticky=tk.SW)
         # Labels to add book
-        font = "Verdana 11"
-        self.title_label = tk.Label(self.treeFrame, text="Title",font=font,bg='lightgray',padx=10).grid(row=1,column=4,sticky=tk.N)
-        self.author_label = tk.Label(self.treeFrame, text="Author",font=font,bg='lightgray',padx=22).grid(row=1,column=5,sticky=tk.N+tk.W)
-        self.collection_label = tk.Label(self.treeFrame, text="Collection",font=font,bg='lightgray',padx=22).grid(row=1,column=6,sticky=tk.N)
+        font = "Verdana 11 italic"
+        self.title_label = tk.Label(self.treeFrame, text="Title",font=font,bg='lightgray').grid(row=1,column=4,sticky=tk.NW)
+        self.author_label = tk.Label(self.treeFrame, text="Author",font=font,bg='lightgray').grid(row=1,column=5,sticky=tk.NW)
+        self.collection_label = tk.Label(self.treeFrame, text="Collection",font=font,bg='lightgray').grid(row=1,column=6,sticky=tk.NW)
         # StringVars to add books
         self.titleVar = tk.StringVar()
         self.authorVar = tk.StringVar()
         self.collectionVar = tk.StringVar()
         self.isReadVar = tk.IntVar()
         # Entries to add book
-        self.title_entry = ttk.Entry(self.treeFrame,textvariable=self.titleVar)
-        self.author_entry = ttk.Entry(self.treeFrame,textvariable=self.authorVar)
-        self.collection_entry = ttk.Entry(self.treeFrame,textvariable=self.collectionVar)
-        self.isRead_check = tk.Checkbutton(self.treeFrame,text="Is read?",bg="lightgray",variable=self.isReadVar)
-        self.title_entry.grid(row=1,column=4,sticky=tk.EW)
+        self.title_entry = tk.Entry(self.treeFrame,relief=tk.GROOVE,bd=2,textvariable=self.titleVar,width=15)
+        self.author_entry = tk.Entry(self.treeFrame,relief=tk.GROOVE,bd=2,textvariable=self.authorVar,width=13)
+        self.collection_entry = tk.Entry(self.treeFrame,relief=tk.GROOVE,bd=2,textvariable=self.collectionVar, width=15)
+        self.isRead_check = ttk.Checkbutton(self.treeFrame,text="Is read",width=5,variable=self.isReadVar)
+        self.title_entry.grid(row=1,column=4,sticky=tk.W)
         self.author_entry.grid(row=1,column=5,sticky=tk.EW)
         self.collection_entry.grid(row=1,column=6,sticky=tk.EW)
-        self.isRead_check.grid(row=1,column=7,sticky=tk.EW)
+        self.isRead_check.grid(row=4,column=4,sticky=tk.EW)
 
         # Searchbar
         self.searchVar = tk.StringVar()
