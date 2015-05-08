@@ -50,7 +50,7 @@ class Biblio(tk.Frame):
         self.title_entry = tk.Entry(self.treeFrame,relief=tk.GROOVE,bd=2,textvariable=self.titleVar,width=15)
         self.author_entry = tk.Entry(self.treeFrame,relief=tk.GROOVE,bd=2,textvariable=self.authorVar,width=13)
         self.collection_entry = tk.Entry(self.treeFrame,relief=tk.GROOVE,bd=2,textvariable=self.collectionVar, width=15)
-        self.isRead_check = ttk.Checkbutton(self.treeFrame,text="Is read",width=5,variable=self.isReadVar)
+        self.isRead_check = ttk.Checkbutton(self.treeFrame,text="Is read",width=6,variable=self.isReadVar)
         self.title_entry.grid(row=1,column=4,sticky=tk.W)
         self.author_entry.grid(row=1,column=5,sticky=tk.EW)
         self.collection_entry.grid(row=1,column=6,sticky=tk.EW)
