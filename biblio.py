@@ -270,5 +270,3 @@ class biblio:
 
 if __name__ == "__main__":
     biblio()
-
-
