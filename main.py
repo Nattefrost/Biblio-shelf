@@ -37,6 +37,7 @@ class Biblio(tk.Frame):
         self.add_book = tk.Button(self.treeFrame,text="Add book")
         self.add_book.grid(row=3,column=4,sticky=tk.SW)
         # Labels to add book
+        """
         font = "Verdana 11 italic"
         self.title_label = tk.Label(self.treeFrame, text="Title",font=font,bg='lightgray').grid(row=1,column=4,sticky=tk.NW)
         self.author_label = tk.Label(self.treeFrame, text="Author",font=font,bg='lightgray').grid(row=1,column=5,sticky=tk.NW)
@@ -46,7 +47,9 @@ class Biblio(tk.Frame):
         self.authorVar = tk.StringVar()
         self.collectionVar = tk.StringVar()
         self.isReadVar = tk.IntVar()
+
         # Entries to add book
+
         self.title_entry = tk.Entry(self.treeFrame,relief=tk.GROOVE,bd=2,textvariable=self.titleVar,width=15)
         self.author_entry = tk.Entry(self.treeFrame,relief=tk.GROOVE,bd=2,textvariable=self.authorVar,width=13)
         self.collection_entry = tk.Entry(self.treeFrame,relief=tk.GROOVE,bd=2,textvariable=self.collectionVar, width=15)
@@ -54,7 +57,7 @@ class Biblio(tk.Frame):
         self.title_entry.grid(row=1,column=4,sticky=tk.W)
         self.author_entry.grid(row=1,column=5,sticky=tk.EW)
         self.collection_entry.grid(row=1,column=6,sticky=tk.EW)
-        self.isRead_check.grid(row=4,column=4,sticky=tk.EW)
+        self.isRead_check.grid(row=4,column=4,sticky=tk.EW)"""
 
         # Searchbar
         self.searchVar = tk.StringVar()
@@ -72,10 +75,16 @@ class Biblio(tk.Frame):
         self.load_all.grid(row=4,column=1,sticky=tk.W+tk.S+tk.E)
 
         # Right click contextual menu
-        self.contextual_menu = tk.Menu(root, tearoff=0)
-        self.contextual_menu.add_command(label="Supprimer le livre.")
+        self.contextual_menu = tk.Menu(root, tearoff=0, activebackground='dodgerblue',activeforeground="black",bg="gray8",
+                                       fg="white",font="Verdana 10 bold",relief=tk.FLAT)
+        self.contextual_menu.add_command(label="Delete selected book.")
         self.contextual_menu.add_separator()
-        self.contextual_menu.add_command(label="J'ai lu ce livre." )
+        self.contextual_menu.add_command(label="Mark book as read." )
+        self.contextual_menu.add_separator()
+        self.contextual_menu.add_command(label="Add book references.",command=self.add_book_window)
+        self.contextual_menu.add_command(label="Add book by ISBN number.")
+        self.contextual_menu.add_separator()
+        self.contextual_menu.add_command(label="Cancel")
 
         # Keyboard bindings
         self.view.bind('<Button-3>', self.contextual_menu_display )
@@ -86,7 +95,11 @@ class Biblio(tk.Frame):
 
         root.mainloop()
 
+    def add_book_window(self):
+        pass
+
     # buttons onclick
+
     def onClick_title(self, event=None):
         self.search_start(0)
     def onClick_author(self, event=None):
