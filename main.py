@@ -14,7 +14,7 @@ class Biblio(tk.Frame):
         root['relief'] = tk.FLAT
         root.geometry("1200x685")
         self.style = ttk.Style()
-        self.style.theme_use('alt')
+        self.style.theme_use('clam')
         self.tree_data = db_access.get_books_to_view()
         self.treeFrame = tk.Frame(root,relief=tk.FLAT).grid(row=0,column=0)
         self.view = ttk.Treeview(self.treeFrame,height=27,columns=("id","Title","Author","Collection"),selectmode='browse',displaycolumns=[0,1,2,3])
@@ -28,8 +28,8 @@ class Biblio(tk.Frame):
         self.ysb = ttk.Scrollbar(self.treeFrame, orient='vertical', command=self.view.yview)
         self.view.configure(yscroll=self.ysb.set )
         self.ysb.grid(row=1,column=3,sticky=tk.E+tk.N+tk.S)
-        self.view.tag_configure('oddrow', background='gray6',foreground="limegreen")
-        self.view.tag_configure('evenrow',background='darkblue',foreground='chartreuse')
+        self.view.tag_configure('oddrow', background='gray6',foreground="ghostwhite")
+        self.view.tag_configure('evenrow',background='firebrick4', foreground='white')
         self.insert_content(self.tree_data)
 
         # Frame to add books
@@ -58,7 +58,7 @@ class Biblio(tk.Frame):
 
         # Searchbar
         self.searchVar = tk.StringVar()
-        self.search_entry = tk.Entry(root,bg="seagreen",bd=2,fg="black",relief=tk.FLAT,font="Consolas 12 bold italic",textvariable=self.searchVar)
+        self.search_entry = tk.Entry(root,bg="gray",bd=2,fg="black",relief=tk.FLAT,font="Consolas 12 bold italic",textvariable=self.searchVar)
         self.search_entry.grid(row=2,column=0,sticky=tk.W+tk.N+tk.E,columnspan=3)
 
         # search buttons
