@@ -14,7 +14,7 @@ def get_books_to_view():
     path = './books.db'
     con = lite.connect(path)
     cur = con.cursor()
-    sql = 'SELECT title, author, collection,read from books'
+    sql = 'SELECT title, read, author_id, editor_id from books'
     cur.execute(sql)
     all_books = cur.fetchall()
     con.commit()

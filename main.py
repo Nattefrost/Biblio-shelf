@@ -76,7 +76,6 @@ class Biblio(tk.Frame):
 
     def add_book_window(self, event=None):
         window = add_dialog.AddDialog()
-        root.wait_window(window)
 
     def ask_isbn(self, event=None):
         isbn_nb = simpledialog.askstring(title="Enter ISBN",prompt="Enter book ISBN")
