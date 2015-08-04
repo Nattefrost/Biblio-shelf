@@ -5,19 +5,24 @@ import json
 
 #https://www.googleapis.com/books/v1/volumes?q=isbn:2020291606
 
-def get_isbn_ref(isbn=None):
+def get_isbn_ref(isbn):
     """
     :return: Tuple containing the book data extracted from google API JSON
     """
-    res = urllib.request.urlopen('https://www.googleapis.com/books/v1/volumes?q=isbn:2277212202')
+    res = urllib.request.urlopen('https://www.googleapis.com/books/v1/volumes?q=isbn:{}'.format(isbn))
     str_res = res.readall().decode('utf-8')
     data = json.loads(str_res)
-    title = data['items'][0]['volumeInfo']['title']
-    author = data['items'][0]['volumeInfo']['authors'][0]
+    try:
+        title = data['items'][0]['volumeInfo']['title']
+        author = data['items'][0]['volumeInfo']['authors'][0]
+    except KeyError:
+        title = "Unknown"
+        author = "Unknown"
     try:
         publisher = data['items'][0]['volumeInfo']['publisher']
     except KeyError:
         publisher = "Unknown"
+
     return (title, author, publisher)
 
-get_isbn_ref() # remove once data is processed
+#gt_isbn_ref() # remove once data is processed

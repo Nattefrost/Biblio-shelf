@@ -3,6 +3,9 @@ __author__ = 'Nattefrost'
 import tkinter as tk
 import db_access
 from tkinter import ttk
+from tkinter import simpledialog
+from tkinter import messagebox
+import find_book_ISBN as isbn
 
 class Biblio(tk.Frame):
     def __init__(self, root ):
@@ -69,7 +72,7 @@ class Biblio(tk.Frame):
         self.search_title_button.grid(row=3,column=0,sticky=tk.W+tk.S+tk.E)
         self.search_author_button = ttk.Button(root,text="Search author",underline=7,command=self.onClick_author)
         self.search_author_button.grid(row=3,column=1,sticky=tk.W+tk.S+tk.E)
-        self.search_col_button = ttk.Button(root,text="Search collection",underline=10,command=self.onClick_collection)
+        self.search_col_button = ttk.Button(root,text="Search publisher",underline=10,command=self.onClick_collection)
         self.search_col_button.grid(row=3,column=2,sticky=tk.W+tk.S+tk.E)
         self.load_all = ttk.Button(root,text="Load whole library",underline=1, command=self.load_all_callback)
         self.load_all.grid(row=4,column=1,sticky=tk.W+tk.S+tk.E)
@@ -81,8 +84,8 @@ class Biblio(tk.Frame):
         self.contextual_menu.add_separator()
         self.contextual_menu.add_command(label="Mark book as read." )
         self.contextual_menu.add_separator()
-        self.contextual_menu.add_command(label="Add book references.",command=self.add_book_window)
-        self.contextual_menu.add_command(label="Add book by ISBN number.")
+        self.contextual_menu.add_command(label="Add full book references.",command=self.add_book_window)
+        self.contextual_menu.add_command(label="Add book by ISBN number. Needs network",command=self.ask_isbn)
         self.contextual_menu.add_separator()
         self.contextual_menu.add_command(label="Cancel")
 
@@ -97,6 +100,15 @@ class Biblio(tk.Frame):
 
     def add_book_window(self):
         pass
+
+    def ask_isbn(self):
+        isbn_nb = simpledialog.askstring(title="Enter ISBN",prompt="Enter book ISBN")
+        if isbn_nb:
+            book_data = isbn.get_isbn_ref(isbn_nb)
+            if book_data[0] and book_data[1] != "Unknown":
+                messagebox.askquestion("Add this book ?","\n Title : {} \n Author : {} \n Publisher : {} ".format(book_data[0],book_data[1], book_data[2]) )
+            else:
+                messagebox.showerror("Book not found", "We could not find the book. \n Please enter full book references")
 
     # buttons onclick
 
