@@ -23,6 +23,6 @@ def get_isbn_ref(isbn):
     except KeyError:
         publisher = "Unknown"
 
-    return (title, author, publisher)
+    return (title.capitalize(), author.capitalize(), publisher.capitalize())
 
 #gt_isbn_ref() # remove once data is processed

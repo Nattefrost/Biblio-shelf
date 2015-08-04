@@ -7,16 +7,16 @@ import sqlite3 as lite
 
 
 def check_db_exists():
-    if os.path.isfile("./test.db"):
+    if os.path.isfile("./books.db"):
         print('DB exists')
     else:
         print("DB doesnt exist")
-        print("CREATING DATABASE ./test.db")
+        print("CREATING DATABASE ./books.db")
         create_db()
 
 def create_db():
     con = None
-    path = "./test.db"
+    path = "./books.db"
     con = lite.connect(path)
     c = con.cursor()
     c.execute("CREATE TABLE Authors(id INTEGER PRIMARY KEY AUTOINCREMENT, author TEXT NOT NULL UNIQUE)")
@@ -28,6 +28,6 @@ def create_db():
 
     c.execute("INSERT INTO Editors VALUES('0', 'Unknown') ")
     con.commit()
-
+    con.close()
 
 check_db_exists()

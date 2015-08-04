@@ -6,13 +6,14 @@ from tkinter import ttk
 from tkinter import simpledialog
 from tkinter import messagebox
 import find_book_ISBN as isbn
+import add_dialog
 
 class Biblio(tk.Frame):
     def __init__(self, root ):
         tk.Frame.__init__(self, root)
         root['bg'] = 'lightgray'
         root.windowIcon = tk.PhotoImage("photo", file="./book_icon.gif") # setting icon
-        root.tk.call('wm','iconphoto',root._w,root.windowIcon)
+        root.tk.call('wm','iconphoto',root._w, root.windowIcon)
         root['bd'] = 10
         root['relief'] = tk.FLAT
         root.geometry("1200x685")
@@ -34,33 +35,6 @@ class Biblio(tk.Frame):
         self.view.tag_configure('oddrow', background='gray6',foreground="ghostwhite")
         self.view.tag_configure('evenrow',background='firebrick4', foreground='white')
         self.insert_content(self.tree_data)
-
-        # Frame to add books
-        self.add_frame = tk.Frame(root,relief=tk.FLAT,bg='blue').grid(row=3,column=5)
-        self.add_book = tk.Button(self.treeFrame,text="Add book")
-        self.add_book.grid(row=3,column=4,sticky=tk.SW)
-        # Labels to add book
-        """
-        font = "Verdana 11 italic"
-        self.title_label = tk.Label(self.treeFrame, text="Title",font=font,bg='lightgray').grid(row=1,column=4,sticky=tk.NW)
-        self.author_label = tk.Label(self.treeFrame, text="Author",font=font,bg='lightgray').grid(row=1,column=5,sticky=tk.NW)
-        self.collection_label = tk.Label(self.treeFrame, text="Collection",font=font,bg='lightgray').grid(row=1,column=6,sticky=tk.NW)
-        # StringVars to add books
-        self.titleVar = tk.StringVar()
-        self.authorVar = tk.StringVar()
-        self.collectionVar = tk.StringVar()
-        self.isReadVar = tk.IntVar()
-
-        # Entries to add book
-
-        self.title_entry = tk.Entry(self.treeFrame,relief=tk.GROOVE,bd=2,textvariable=self.titleVar,width=15)
-        self.author_entry = tk.Entry(self.treeFrame,relief=tk.GROOVE,bd=2,textvariable=self.authorVar,width=13)
-        self.collection_entry = tk.Entry(self.treeFrame,relief=tk.GROOVE,bd=2,textvariable=self.collectionVar, width=15)
-        self.isRead_check = ttk.Checkbutton(self.treeFrame,text="Is read",width=6,variable=self.isReadVar)
-        self.title_entry.grid(row=1,column=4,sticky=tk.W)
-        self.author_entry.grid(row=1,column=5,sticky=tk.EW)
-        self.collection_entry.grid(row=1,column=6,sticky=tk.EW)
-        self.isRead_check.grid(row=4,column=4,sticky=tk.EW)"""
 
         # Searchbar
         self.searchVar = tk.StringVar()
@@ -95,20 +69,25 @@ class Biblio(tk.Frame):
         root.bind('<Control-o>', self.load_all_callback )
         root.bind('<Control-a>', self.onClick_author )
         root.bind('<Control-l>', self.onClick_collection)
+        root.bind('<F2>',self.ask_isbn)
+        root.bind('<F1>',self.add_book_window)
 
         root.mainloop()
 
-    def add_book_window(self):
-        pass
+    def add_book_window(self, event=None):
+        window = add_dialog.AddDialog()
+        root.wait_window(window)
 
-    def ask_isbn(self):
+    def ask_isbn(self, event=None):
         isbn_nb = simpledialog.askstring(title="Enter ISBN",prompt="Enter book ISBN")
         if isbn_nb:
             book_data = isbn.get_isbn_ref(isbn_nb)
             if book_data[0] and book_data[1] != "Unknown":
-                messagebox.askquestion("Add this book ?","\n Title : {} \n Author : {} \n Publisher : {} ".format(book_data[0],book_data[1], book_data[2]) )
+                res = messagebox.askquestion("Add this book ?","\nTitle : {} \nAuthor : {} \nPublisher : {} ".format(book_data[0],book_data[1], book_data[2]) )
+                if res == "yes":
+                    pass #TODO insert into DB
             else:
-                messagebox.showerror("Book not found", "We could not find the book. \n Please enter full book references")
+                messagebox.showerror("Book not found", "Google books could not find the book. \nPlease enter full book references")
 
     # buttons onclick
 
