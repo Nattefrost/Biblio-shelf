@@ -24,5 +24,3 @@ def get_isbn_ref(isbn):
         publisher = "Unknown"
 
     return (title.capitalize(), author.capitalize(), publisher.capitalize())
-
-#gt_isbn_ref() # remove once data is processed

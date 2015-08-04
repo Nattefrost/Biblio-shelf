@@ -50,6 +50,6 @@ class AddDialog:
         self.root.destroy()
 
     def validate(self):
-        print( self.title_entry.get(), self.isReadVar.get() )
-        db_access.add_book(self.titleVar.get(), self.authorVar.get(), self.collectionVar.get() , self.isReadVar.get() )
+        db_access.add_book(self.title_entry.get().capitalize(), self.author_entry.get().capitalize(),
+            self.collection_entry.get().capitalize() , self.isReadVar.get() )
         self.root.destroy()

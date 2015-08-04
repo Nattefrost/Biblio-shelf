@@ -26,7 +26,7 @@ class Biblio(tk.Frame):
         self.view.heading('#0', text='id', anchor='w')
         self.view.heading('#1', text="Title", anchor="w")
         self.view.heading('#2', text="Author", anchor="w")
-        self.view.heading('#3', text="Collection", anchor="w")
+        self.view.heading('#3', text="Publisher", anchor="w")
         self.view.heading('#4',text="Read",anchor="w")
         self.view.grid(row=1,column=0,sticky=tk.W+tk.S+tk.NE,columnspan=3)
         self.ysb = ttk.Scrollbar(self.treeFrame, orient='vertical', command=self.view.yview)
