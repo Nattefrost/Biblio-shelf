@@ -54,9 +54,9 @@ class Biblio(tk.Frame):
         # Right click contextual menu
         self.contextual_menu = tk.Menu(root, tearoff=0, activebackground='dodgerblue',activeforeground="black",bg="gray8",
                                        fg="white",font="Verdana 10 bold",relief=tk.FLAT)
-        self.contextual_menu.add_command(label="Delete selected book.")
+        self.contextual_menu.add_command(label="Delete selected book.",command=self.delete_selected)
         self.contextual_menu.add_separator()
-        self.contextual_menu.add_command(label="Mark book as read." )
+        self.contextual_menu.add_command(label="Mark book as read.",command=self.mark_read )
         self.contextual_menu.add_separator()
         self.contextual_menu.add_command(label="Add full book references.",command=self.add_book_window)
         self.contextual_menu.add_command(label="Add book by ISBN number. Needs network",command=self.ask_isbn)
@@ -74,21 +74,38 @@ class Biblio(tk.Frame):
 
         root.mainloop()
 
-    def add_book_window(self, event=None):
-        window = add_dialog.AddDialog()
+
 
     def ask_isbn(self, event=None):
-        isbn_nb = simpledialog.askstring(title="Enter ISBN",prompt="Enter book ISBN")
+        isbn_nb = simpledialog.askstring(title="Search book by ISBN", prompt="Enter book ISBN")
         if isbn_nb:
             book_data = isbn.get_isbn_ref(isbn_nb)
             if book_data[0] and book_data[1] != "Unknown":
                 res = messagebox.askquestion("Add this book ?","\nTitle : {} \nAuthor : {} \nPublisher : {} ".format(book_data[0],book_data[1], book_data[2]) )
                 if res == "yes":
-                    pass #TODO insert into DB
+                    db_access.add_book(book_data[0],book_data[1],book_data[2],0)
+                    self.load_all_callback()
             else:
-                messagebox.showerror("Book not found", "Google books could not find the book. \nPlease enter full book references")
+                messagebox.showerror("""Book not found", "Google books could not find the book. \n
+                Please enter full book references""")
 
+
+
+    def mark_read(self):
+        item = self.view.selection()[0]
+        to_mark = self.view.item(item,"values")
+        db_access.mark_read(to_mark[0])
+        self.load_all_callback()
     # buttons onclick
+
+    def delete_selected(self):
+        item = self.view.selection()
+        to_delete = self.view.item(item,"values")
+        res = messagebox.askquestion("Delete book ?","Are you sure you want to delete this book : {} ?".format(to_delete[0]))
+        if res == "yes":
+            db_access.remove_book(to_delete)
+            self.view.delete(self.view.selection())
+            self.load_all_callback()
 
     def onClick_title(self, event=None):
         self.search_start(0)
@@ -99,6 +116,7 @@ class Biblio(tk.Frame):
 
     def load_all_callback(self,event=None):
         self.clean_tree()
+        self.tree_data = db_access.get_books_to_view()
         self.insert_content(self.tree_data)
 
     def search_start(self, criteria):
@@ -114,6 +132,9 @@ class Biblio(tk.Frame):
             self.insert_content(found_books)
 
 
+    def add_book_window(self, event=None):
+        add_dialog.AddDialog(self)
+
     def clean_tree(self):
         self.view.delete(*self.view.get_children())
 
@@ -127,7 +148,7 @@ class Biblio(tk.Frame):
     def contextual_menu_display(self, event):
         """
         Displays a menu under cursor when right click
-        is pressed over the title lisbox
+        is pressed over the treeview table
         :param event: right click
         :return: void
         """

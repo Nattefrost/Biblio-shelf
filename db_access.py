@@ -34,12 +34,12 @@ def add_book(title, author, editor, read):
     if id_ed:
         editor = id_ed[0][0]
     else:
-        insert_editor(editor)
+        editor = insert_editor(editor)
 
     if id_au:
         author = id_au[0][0]
     else:
-        insert_author(author)
+        author = insert_author(author)
 
     path = './books.db'
     con = lite.connect(path)
@@ -57,8 +57,10 @@ def insert_author(author):
     sql = "INSERT INTO Authors(author) VALUES(?)"
     cur.execute(sql, (author,) )
     con.commit()
+    cur.execute("SELECT MAX(id) FROM Authors")
+    id_to_return = cur.fetchone()
     con.close()
-    # RETURN ID JUST ENTERED SO IT DOESNT ENTER STRING INSTEAD OF ID, see LINE 34-42
+    return id_to_return[0]
 
 def insert_editor(editor):
     con = None
@@ -67,8 +69,10 @@ def insert_editor(editor):
     cur = con.cursor()
     cur.execute("INSERT INTO Editors(editor) VALUES(?)",  (editor,) )
     con.commit()
+    cur.execute("SELECT MAX(id) FROM Editors")
+    id_to_return = cur.fetchone()
     con.close()
-    # RETURN ID JUST ENTERED
+    return id_to_return[0]
 
 def author_exists(author):
     con = None
@@ -94,23 +98,22 @@ def editor_exists(editor):
     return res
 
 
-def mark_read(book):
+def mark_read(title):
     con = None
     path = './books.db'
     con = lite.connect(path)
     cur = con.cursor()
-    sql = 'UPDATE books SET read = 1 WHERE title = "{}";'.format(book)
+    sql = 'UPDATE books SET read = 1 WHERE title = "{}";'.format(title)
     cur.execute(sql)
     con.commit()
     con.close()
 
 def remove_book(book):
-    book_id = book[0][0]
-    print(book_id)
+    book_title = book[0]
     con = None
     path = './books.db'
     con = lite.connect(path)
     cur = con.cursor()
-    cur.execute("DELETE FROM books WHERE id='{}';".format(book_id))
+    cur.execute("DELETE FROM books WHERE title='{}';".format(book_title))
     con.commit()
     con.close()

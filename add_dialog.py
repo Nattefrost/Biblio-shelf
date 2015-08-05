@@ -5,8 +5,9 @@ from tkinter import ttk
 import db_access
 
 class AddDialog:
-    def __init__(self):
+    def __init__(self, parent):
         self.root = tk.Tk()
+        self.parent = parent
         self.root.title("Add a book")
         self.root.geometry("275x175")
         self.result = None
@@ -21,9 +22,9 @@ class AddDialog:
 
         # Entries to add a book
 
-        self.title_entry = tk.Entry(self.root,relief=tk.SUNKEN,bd=3,textvariable=self.titleVar,width=15)
-        self.author_entry = tk.Entry(self.root,relief=tk.SUNKEN,bd=3,textvariable=self.authorVar,width=15)
-        self.collection_entry = tk.Entry(self.root,relief=tk.SUNKEN,bd=3,textvariable=self.collectionVar, width=15)
+        self.title_entry = ttk.Entry(self.root,textvariable=self.titleVar,width=15)
+        self.author_entry = ttk.Entry(self.root,textvariable=self.authorVar,width=15)
+        self.collection_entry = ttk.Entry(self.root,textvariable=self.collectionVar, width=15)
         self.isRead_check = ttk.Checkbutton(self.root,text="READ?",width=6,variable=self.isReadVar)
 
         self.title_entry.grid(column=0,row=0)
@@ -38,11 +39,11 @@ class AddDialog:
         self.collection_label = tk.Label(self.root, text="Publisher",font=font).grid(column=1,row=2)
 
         # Buttons
-        self.cancel_btn = ttk.Button(self.root, text="Cancel",command=self.cancel)
-        self.validate_btn = ttk.Button(self.root, text="Validate",command=self.validate)
+        self.cancel_btn = tk.Button(self.root, text="Cancel",command=self.cancel,relief= tk.GROOVE,bd=3,bg="indianred")
+        self.validate_btn = tk.Button(self.root,relief=tk.RAISED, bd=3, text="Validate",command=self.validate,bg="palegreen")
 
-        self.cancel_btn.grid(column=0,row=4)
-        self.validate_btn.grid(column=1,row=4)
+        self.cancel_btn.grid(column=1,row=4)
+        self.validate_btn.grid(column=0,row=4)
 
         self.root.mainloop()
 
@@ -52,4 +53,6 @@ class AddDialog:
     def validate(self):
         db_access.add_book(self.title_entry.get().capitalize(), self.author_entry.get().capitalize(),
             self.collection_entry.get().capitalize() , self.isReadVar.get() )
+        self.parent.tree_data = db_access.get_books_to_view()
+        self.parent.load_all_callback()
         self.root.destroy()
