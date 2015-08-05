@@ -7,12 +7,13 @@ import db_access
 class AddDialog:
     def __init__(self, parent):
         self.root = tk.Tk()
+        self.root.eval('tk::PlaceWindow %s center' % self.root.winfo_pathname(self.root.winfo_id()))
         self.parent = parent
         self.root.title("Add a book")
         self.root.geometry("275x175")
         self.result = None
         self.style = ttk.Style()
-        self.style.theme_use('alt')
+        self.style.theme_use('clam')
 
         # StringVars to add a book
         self.titleVar = tk.StringVar()

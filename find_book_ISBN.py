@@ -2,16 +2,20 @@ __author__ = 'Nattefrost'
 
 import urllib.request
 import json
+import re
 
-#https://www.googleapis.com/books/v1/volumes?q=isbn:2020291606
+
 
 def get_isbn_ref(isbn):
     """
     :return: Tuple containing the book data extracted from google API JSON
     """
-    res = urllib.request.urlopen('https://www.googleapis.com/books/v1/volumes?q=isbn:{}'.format(isbn))
+    proper_isbn = re.sub("\D", "", isbn)
+    print(proper_isbn)
+    res = urllib.request.urlopen('https://www.googleapis.com/books/v1/volumes?q=isbn:{}'.format(proper_isbn))
     str_res = res.readall().decode('utf-8')
     data = json.loads(str_res)
+
     try:
         title = data['items'][0]['volumeInfo']['title']
         author = data['items'][0]['volumeInfo']['authors'][0]

@@ -86,8 +86,7 @@ class Biblio(tk.Frame):
                     db_access.add_book(book_data[0],book_data[1],book_data[2],0)
                     self.load_all_callback()
             else:
-                messagebox.showerror("""Book not found", "Google books could not find the book. \n
-                Please enter full book references""")
+                messagebox.showerror("Book not found", """Google books could not find the book. \nPlease enter full book references""")
 
 
 
