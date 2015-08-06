@@ -64,7 +64,7 @@ class Biblio(tk.Frame):
         self.contextual_menu.add_command(label="Cancel")
 
         # Keyboard bindings
-        self.view.bind('<Button-3>', self.contextual_menu_display )
+        root.bind('<Button-3>', self.contextual_menu_display )
         root.bind('<Return>', self.onClick_title )
         root.bind('<Control-o>', self.load_all_callback )
         root.bind('<Control-a>', self.onClick_author )
@@ -100,11 +100,12 @@ class Biblio(tk.Frame):
     def delete_selected(self):
         item = self.view.selection()
         to_delete = self.view.item(item,"values")
-        res = messagebox.askquestion("Delete book ?","Are you sure you want to delete this book : {} ?".format(to_delete[0]))
-        if res == "yes":
-            db_access.remove_book(to_delete)
-            self.view.delete(self.view.selection())
-            self.load_all_callback()
+        if to_delete:
+            res = messagebox.askquestion("Delete book ?","Are you sure you want to delete this book : {} ?".format(to_delete[0]))
+            if res == "yes":
+                db_access.remove_book(to_delete)
+                self.view.delete(self.view.selection())
+                self.load_all_callback()
 
     def onClick_title(self, event=None):
         self.search_start(0)

@@ -53,7 +53,6 @@ class AddDialog:
             self.isReadVar.set(True)
         else:
             self.isReadVar.set(False)
-        print(self.isReadVar.get() )
 
     def cancel(self):
         self.root.destroy()
