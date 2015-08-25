@@ -18,7 +18,7 @@ sub get_data()
 
 
     
-    my $sth = $dbh->prepare("SELECT title, author, editor, read
+    my $sth = $dbh->prepare("SELECT id, title, author, editor, read
              FROM Books B
              JOIN Authors A
              ON B.author_id = A.id
@@ -35,13 +35,13 @@ sub get_data()
     while ($row = $sth->fetchrow_arrayref())
     {
         my $read;
-        if (@$row[3] == 1) {
+        if (@$row[4] == 1) {
             $read = "Oui";
         } else {
             $read = "Non";
         }
         
-        print " <TR><TD> $i</TD><TD> @$row[0]</TD><TD> @$row[1]</TD><TD> @$row[2]</TD><TD> $read</TD></TR>";
+        print " <TR><TD> @$row[0]</TD><TD> @$row[1]</TD><TD> @$row[2]</TD><TD> @$row[3]</TD><TD> $read</TD></TR>";
         $i += 1;
     }
 
