@@ -10,7 +10,7 @@ def get_isbn_ref(isbn):
     """
     :return: Tuple containing the book data extracted from google API JSON
     """
-    proper_isbn = isbn.replace("-", "")
+    proper_isbn = isbn.replace("-", "") # regexp to chheck ISBN13 : ^\d{12}[\d|X]$
     res = urllib.request.urlopen('https://www.googleapis.com/books/v1/volumes?q=isbn:{}'.format(proper_isbn))
     str_res = res.readall().decode('utf-8')
     data = json.loads(str_res)

@@ -51,6 +51,7 @@ class Biblio(tk.Frame):
         self.load_all = ttk.Button(root,text="Load whole library",underline=1, command=self.load_all_callback)
         self.load_all.grid(row=4,column=1,sticky=tk.W+tk.S+tk.E)
 
+
         # Right click contextual menu
         self.contextual_menu = tk.Menu(root, tearoff=0, activebackground='dodgerblue',activeforeground="black",bg="gray8",
                                        fg="white",font="Verdana 10 bold",relief=tk.FLAT)
@@ -58,8 +59,8 @@ class Biblio(tk.Frame):
         self.contextual_menu.add_separator()
         self.contextual_menu.add_command(label="Mark book as read.",command=self.mark_read )
         self.contextual_menu.add_separator()
-        self.contextual_menu.add_command(label="Add full book references.",command=self.add_book_window)
-        self.contextual_menu.add_command(label="Add book by ISBN number. Needs network",command=self.ask_isbn)
+        self.contextual_menu.add_command(label="Add full book references.                            F1",command=self.add_book_window)
+        self.contextual_menu.add_command(label="Add book by ISBN number. Needs network  F2",command=self.ask_isbn)
         self.contextual_menu.add_separator()
         self.contextual_menu.add_command(label="Cancel")
 
