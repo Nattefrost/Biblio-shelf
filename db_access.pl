@@ -29,12 +29,19 @@ sub get_data()
 
 # Printing in a loop
     print "<div align='center'> ";
-    print "<table BORDER CELLPADDING=2><TR><TH>ID</TH><TH>Titre</TH><TH>Auteur</TH><TH>Editeur</TH><TH>Lu</TH></TR>";
+    print "<table CELLPADDING=2><TR><TH>ID</TH><TH>Titre</TH><TH>Auteur</TH><TH>Editeur</TH><TH>Lu ?</TH></TR>";
     my $row;
     my $i = 1;
     while ($row = $sth->fetchrow_arrayref())
     {
-        print " <TR><TD> $i</TD><TD> @$row[0]</TD><TD> @$row[1]</TD><TD> @$row[2]</TD><TD> @$row[3]</TD></TR>";
+        my $read;
+        if (@$row[3] == 1) {
+            $read = "Oui";
+        } else {
+            $read = "Non";
+        }
+        
+        print " <TR><TD> $i</TD><TD> @$row[0]</TD><TD> @$row[1]</TD><TD> @$row[2]</TD><TD> $read</TD></TR>";
         $i += 1;
     }
 
@@ -54,6 +61,7 @@ print $cgi->start_html(-title => "Livres",
                        -text => "white",
                        -charset=>"UTF-8",
                        -encoding=>"UTF-8");
+
 print  "<style type='text/css'>
 
         body {
@@ -67,7 +75,7 @@ print  "<style type='text/css'>
         }
 
         table, th, td {
-            border: 1px solid green;
+            border: 1px solid dodgerblue;
         }
 
         </style>";
