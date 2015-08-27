@@ -72,6 +72,7 @@ class Biblio(tk.Frame):
         root.bind('<Control-l>', self.onClick_collection)
         root.bind('<F2>',self.ask_isbn)
         root.bind('<F1>',self.add_book_window)
+        
 
         root.mainloop()
 

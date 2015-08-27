@@ -5,31 +5,37 @@ use DBI;
 use CGI;
 
 
-
-
-sub get_data()
+sub get_data
 {
+    my @args  = @_;
+    my $sort = @args[0];
+    
+    if (defined $sort && $sort ne '') {
+		$sort = $sort;
+	} else {
+		$sort = 'title';
+	}
+	
     my $dbh = DBI->connect(          
         "dbi:SQLite:dbname=books.db", 
         "",                          
         "",                       
         { RaiseError => 1 },         
     ) or die $DBI::errstr;
-
-
     
-    my $sth = $dbh->prepare("SELECT id, title, author, editor, read
-             FROM Books B
-             JOIN Authors A
-             ON B.author_id = A.id
-             JOIN Editors E
-             ON B.editor_id = E.id; ");
+    my $sth = $dbh->prepare("SELECT title, author, editor, read
+                    FROM Books B
+                    JOIN Authors A
+                    ON B.author_id = A.id
+                    JOIN Editors E
+                    ON B.editor_id = E.id
+                    ORDER BY $sort;");
     $sth->execute();
 
-
+   
 # Printing in a loop
     print "<div align='center'> ";
-    print "<table CELLPADDING=2><TR><TH>ID</TH><TH>Titre</TH><TH>Auteur</TH><TH>Editeur</TH><TH>Lu ?</TH></TR>";
+    print "<table CELLPADDING=2><TR><TH><a href='./livres?sort=title'>Titre</a></TH><TH><a href='./livres?sort=author'>Auteur</a></TH><TH><a href='./livres?sort=editor'>Editeur</a></TH><TH>Lu ?</TH></TR>";
     my $row;
     my $i = 1;
     while ($row = $sth->fetchrow_arrayref())
@@ -41,7 +47,7 @@ sub get_data()
             $read = "Non";
         }
         
-        print " <TR><TD> @$row[0]</TD><TD> @$row[1]</TD><TD> @$row[2]</TD><TD> @$row[3]</TD><TD> $read</TD></TR>";
+        print " <TR><TD> @$row[0]</TD><TD> @$row[1]</TD><TD> @$row[2]</TD><TD> $read</TD></TR>";
         $i += 1;
     }
 
@@ -68,6 +74,8 @@ print  "<style type='text/css'>
             font-family: verdana ;
             font-size: 100% ;
             text-align: center ;
+            background: black ;
+            text: white ;
             }
 
         table {
@@ -77,9 +85,20 @@ print  "<style type='text/css'>
         table, th, td {
             border: 1px solid dodgerblue;
         }
+        a{
+          color:				limegreen;
+          font-weight:		italic;
+          text-decoration:    none;
+            
+        } a:hover {
+            color:				yellow;	
+        } a:active {
+            color:				red;
+        }
+
 
         </style>";
-
-&get_data();
+my $sort = $cgi->param("sort");
+&get_data($sort);
 
 print $cgi-> end_html;
