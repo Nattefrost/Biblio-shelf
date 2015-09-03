@@ -3,19 +3,40 @@
 use strict;
 use DBI;
 use CGI;
+use POSIX;
+
+sub get_db_last_mod {
+    my $file = "./books.db";
+    my $date = POSIX::strftime(
+                "%d%m%y",
+                localtime(
+                        (stat $file)[9]
+                    )
+                );
+    
+    my $day = substr $date, 0,2;
+    my $month = substr $date, 2,2;
+    my $year = substr $date, 4;
+    
+    print "<div style='color:#A1F3CB'>
+            <font size='2'>
+            BDD mise à jour le  $day / $month / $year 
+            </font>
+            </div>";
+    
+}
 
 
-sub get_data
-{
+sub get_data {
     my @args  = @_;
     my $sort = @args[0];
     
     if (defined $sort && $sort ne '') {
-		$sort = $sort;
-	} else {
-		$sort = 'title';
-	}
-	
+        $sort = $sort;
+    } else {
+        $sort = 'title';
+    }
+    
     my $dbh = DBI->connect(          
         "dbi:SQLite:dbname=books.db", 
         "",                          
@@ -33,22 +54,20 @@ sub get_data
     $sth->execute();
 
    
-# Printing in a loop
+    # Printing in a loop
     print "<div align='center'> ";
     print "<table CELLPADDING=2><TR><TH><a href='./livres?sort=title'>Titre</a></TH><TH><a href='./livres?sort=author'>Auteur</a></TH><TH><a href='./livres?sort=editor'>Editeur</a></TH><TH>Lu ?</TH></TR>";
     my $row;
-    my $i = 1;
     while ($row = $sth->fetchrow_arrayref())
     {
         my $read;
-        if (@$row[4] == 1) {
+        if (@$row[3] == 1) {
             $read = "Oui";
         } else {
             $read = "Non";
         }
         
         print " <TR><TD> @$row[0]</TD><TD> @$row[1]</TD><TD> @$row[2]</TD><TD> $read</TD></TR>";
-        $i += 1;
     }
 
 
@@ -86,19 +105,20 @@ print  "<style type='text/css'>
             border: 1px solid dodgerblue;
         }
         a{
-          color:				limegreen;
-          font-weight:		italic;
+          color:                limegreen;
+          font-weight:      italic;
           text-decoration:    none;
             
         } a:hover {
-            color:				yellow;	
+            color:              yellow; 
         } a:active {
-            color:				red;
+            color:              red;
         }
 
 
         </style>";
 my $sort = $cgi->param("sort");
-&get_data($sort);
+get_db_last_mod();
+get_data($sort);
 
 print $cgi-> end_html;
