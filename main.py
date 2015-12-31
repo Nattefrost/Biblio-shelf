@@ -21,7 +21,10 @@ class Biblio(tk.Frame):
         self.style.theme_use('clam')
         self.tree_data = db_access.get_books_to_view()
         self.treeFrame = tk.Frame(root,relief=tk.FLAT).grid(row=0,column=0)
-        self.view = ttk.Treeview(self.treeFrame,height=27,columns=("id","Title","Author","Collection"),selectmode='browse',displaycolumns=[0,1,2,3])
+        self.view = ttk.Treeview(self.treeFrame, height=27, 
+                                    columns=("id","Title","Author","Collection"),
+                                    selectmode='browse',
+                                    displaycolumns=[0,1,2,3])
         self.view['show'] = 'headings' #removes first empty column
         self.view.heading('#0', text='id', anchor='w')
         self.view.heading('#1', text="Title", anchor="w")
@@ -32,8 +35,8 @@ class Biblio(tk.Frame):
         self.ysb = ttk.Scrollbar(self.treeFrame, orient='vertical', command=self.view.yview)
         self.view.configure(yscroll=self.ysb.set )
         self.ysb.grid(row=1,column=3,sticky=tk.E+tk.N+tk.S)
-        self.view.tag_configure('oddrow', background='gray6',foreground="ghostwhite")
-        self.view.tag_configure('evenrow',background='firebrick4', foreground='white')
+        self.view.tag_configure('oddrow', background='#CECECE',foreground="black")
+        self.view.tag_configure('evenrow',background='#816391', foreground='black')
         self.insert_content(self.tree_data)
 
         # Searchbar
