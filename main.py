@@ -7,6 +7,8 @@ from tkinter import simpledialog
 from tkinter import messagebox
 import find_book_ISBN as isbn
 import add_dialog
+import plot
+import stats
 
 class Biblio(tk.Frame):
     def __init__(self, root ):
@@ -53,7 +55,8 @@ class Biblio(tk.Frame):
         self.search_col_button.grid(row=3,column=2,sticky=tk.W+tk.S+tk.E)
         self.load_all = ttk.Button(root,text="Load whole library",underline=1, command=self.load_all_callback)
         self.load_all.grid(row=4,column=1,sticky=tk.W+tk.S+tk.E)
-
+        self.load_stats = ttk.Button(root, text="Show stats", command=self.onClick_stats)
+        self.load_stats.grid(row=4,column=2,sticky=tk.W+tk.S+tk.E)
 
         # Right click contextual menu
         self.contextual_menu = tk.Menu(root, tearoff=0, activebackground='dodgerblue',activeforeground="black",bg="gray8",
@@ -118,7 +121,8 @@ class Biblio(tk.Frame):
         self.search_start(1)
     def onClick_collection(self, event=None):
         self.search_start(2)
-
+    def onClick_stats(self, event=None):
+        plot.TkPlot(stats.generate_authors_top_ten())
     def load_all_callback(self,event=None):
         self.clean_tree()
         self.tree_data = db_access.get_books_to_view()

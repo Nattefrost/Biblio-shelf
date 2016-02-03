@@ -8,6 +8,9 @@ import time
 import sqlite3 as lite
 
 
+############################################
+############# BASIC CRUD ##################
+############################################
 
 def get_books_to_view():
     con = None
@@ -117,3 +120,34 @@ def remove_book(book):
     cur.execute("DELETE FROM books WHERE title='{}';".format(book_title))
     con.commit()
     con.close()
+    
+############################################
+############# DOING SOME STATS #############
+############################################
+
+def get_popular_authors():
+    con = None
+    path = './books.db'
+    con = lite.connect(path)
+    cur = con.cursor()
+    sql = """SELECT COUNT(*), a.author from books as b 
+            JOIN authors as a
+            ON b.author_id = a.id
+            GROUP BY b.author_id; """
+    cur.execute(sql)
+    data = cur.fetchall()
+    con.commit()
+    con.close()
+    return data
+
+def get_read_ratio():
+    con = None
+    path = './books.db'
+    con = lite.connect(path)
+    cur = con.cursor()
+    sql = "SELECT count(*), read from books group by read;"
+    cur.execute(sql)
+    data = cur.fetchall()
+    con.commit()
+    con.close()
+    return data
