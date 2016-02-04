@@ -26,7 +26,7 @@ def generate_authors_top_ten():
                         legend_font_size=5,y_labels_major=[0])
     graph.x_labels=labels
     graph.add("Number of books", values)
-    graph.render_to_file(filename="./stats/authors_top_ten.svg")
+    #graph.render_to_file(filename="./stats/authors_top_ten.svg")
     return top_ten
 
     

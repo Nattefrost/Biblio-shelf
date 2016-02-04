@@ -18,7 +18,7 @@ class Biblio(tk.Frame):
         root.tk.call('wm','iconphoto',root._w, root.windowIcon)
         root['bd'] = 10
         root['relief'] = tk.FLAT
-        root.geometry("1200x685")
+        root.geometry("850x685")
         self.style = ttk.Style()
         self.style.theme_use('clam')
         self.tree_data = db_access.get_books_to_view()
@@ -37,13 +37,13 @@ class Biblio(tk.Frame):
         self.ysb = ttk.Scrollbar(self.treeFrame, orient='vertical', command=self.view.yview)
         self.view.configure(yscroll=self.ysb.set )
         self.ysb.grid(row=1,column=3,sticky=tk.E+tk.N+tk.S)
-        self.view.tag_configure('oddrow', background='#CECECE',foreground="black")
-        self.view.tag_configure('evenrow',background='#816391', foreground='black')
+        self.view.tag_configure('oddrow', background='black',foreground="white")
+        self.view.tag_configure('evenrow',background='#4D2164', foreground='white')
         self.insert_content(self.tree_data)
 
         # Searchbar
         self.searchVar = tk.StringVar()
-        self.search_entry = tk.Entry(root,bg="gray",bd=2,fg="black",relief=tk.FLAT,font="Consolas 12 bold italic",textvariable=self.searchVar)
+        self.search_entry = tk.Entry(root,bg="gray",bd=2,fg="black",relief=tk.SOLID,font="Consolas 12 bold italic",textvariable=self.searchVar)
         self.search_entry.grid(row=2,column=0,sticky=tk.W+tk.N+tk.E,columnspan=3)
 
         # search buttons
@@ -59,7 +59,7 @@ class Biblio(tk.Frame):
         self.load_stats.grid(row=4,column=2,sticky=tk.W+tk.S+tk.E)
 
         # Right click contextual menu
-        self.contextual_menu = tk.Menu(root, tearoff=0, activebackground='dodgerblue',activeforeground="black",bg="gray8",
+        self.contextual_menu = tk.Menu(root, tearoff=0, activebackground='darkslategray',activeforeground="white",bg="gray8",
                                        fg="white",font="Verdana 10 bold",relief=tk.FLAT)
         self.contextual_menu.add_command(label="Delete selected book.",command=self.delete_selected)
         self.contextual_menu.add_separator()
