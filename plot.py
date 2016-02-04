@@ -8,7 +8,7 @@ class TkPlot:
         self.root = tk.Tk()
         self.data = data
         self.root.title('Biblio Stats')
-        self.root.geometry("600x630")
+        self.root.geometry("600x650")
         self.root.resizable(0,0)
         self.CAN_SIZE = (600, 450)
        
