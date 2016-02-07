@@ -29,20 +29,27 @@ class TkPlot:
     def draw_chart(self, data):
         """
         The data arg must be a list of tuples or it will fail
-        example : [('Hemingway', 5), ('Shakespeare', 6)]
+        example : [('Apples', 5), ('Oranges', 6)]
         """
         i = 0
-        position = 20
+        position = 40
         colours = [ '#814800','dodgerblue','cyan','olivedrab','firebrick','dark green', '#E13500', '#FF284E', '#4EEC09', '#4C00B5', '#D1E39C']
         while i < len(data):
             chosen_colour = random.choice(colours)
-            
+            if i == 0:
+                pos_x = 0
+                pos_ori_y = 430
+                graduations = range(22)
+                for it in graduations:
+                    grad = tk.Label(self.can, text=it, fg="black",bg='white', font= 'Arial 10 italic')
+                    grad.place(x=pos_x,y=pos_ori_y)
+                    pos_ori_y -= 20
             colours.remove(chosen_colour)
             self.can.create_rectangle(position, self.CAN_SIZE[0], 
                                       position+20, self.CAN_SIZE[0]-((data[i][1]*20)+160), # Proper setup to scale on canvas/img
                                         fill=chosen_colour)
             tk.Label(self.root, text="{} : {} ".format(data[i][0],data[i][1]),bg=chosen_colour, font="Consolas 8 bold").pack(anchor=tk.N)
-            position+=60
+            position+=40
             i+=1
     
     
