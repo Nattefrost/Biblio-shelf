@@ -53,8 +53,9 @@ class Biblio(tk.Frame):
         self.search_author_button.grid(row=3,column=1,sticky=tk.W+tk.S+tk.E)
         self.search_col_button = ttk.Button(root,text="Search publisher",underline=10,command=self.onClick_collection)
         self.search_col_button.grid(row=3,column=2,sticky=tk.W+tk.S+tk.E)
-        self.load_all = ttk.Button(root,text="Load whole library",underline=1, command=self.load_all_callback)
-        self.load_all.grid(row=4,column=1,sticky=tk.W+tk.S+tk.E)
+        refresh_icon = tk.PhotoImage(file='reload_page_r.gif')
+        self.load_all = ttk.Button(root,image=refresh_icon,text='Reload',underline=1, command=self.load_all_callback)
+        self.load_all.grid(row=4,column=0,sticky=tk.W+tk.S+tk.E)
         self.load_stats = ttk.Button(root, text="Show stats", command=self.onClick_stats)
         self.load_stats.grid(row=4,column=2,sticky=tk.W+tk.S+tk.E)
 
@@ -76,9 +77,9 @@ class Biblio(tk.Frame):
         root.bind('<Control-o>', self.load_all_callback )
         root.bind('<Control-a>', self.onClick_author )
         root.bind('<Control-l>', self.onClick_collection)
-        root.bind('<F2>',self.ask_isbn)
-        root.bind('<F1>',self.add_book_window)
-        
+        root.bind('<F2>', self.ask_isbn)
+        root.bind('<F1>', self.add_book_window)
+        root.bind('<F5>', self.load_all_callback)
 
         root.mainloop()
 
