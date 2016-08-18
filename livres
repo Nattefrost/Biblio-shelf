@@ -90,11 +90,11 @@ print $cgi->start_html(-title => "Livres",
 print  "<style type='text/css'>
 
         body {
-            font-family: verdana ;
-            font-size: 100% ;
-            text-align: center ;
-            background: black ;
-            text: white ;
+            font-family: verdana;
+            font-size: 100%;
+            text-align: center;
+            background: black;
+            text: white;
             }
 
         table {

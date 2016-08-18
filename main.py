@@ -9,6 +9,8 @@ import find_book_ISBN as isbn
 import add_dialog
 import plot
 import stats
+import math
+
 
 class Biblio(tk.Frame):
     def __init__(self, root ):
@@ -23,7 +25,7 @@ class Biblio(tk.Frame):
         self.style.theme_use('clam')
         self.tree_data = db_access.get_books_to_view()
         self.treeFrame = tk.Frame(root,relief=tk.FLAT).grid(row=0,column=0)
-        self.view = ttk.Treeview(self.treeFrame, height=27, 
+        self.view = ttk.Treeview(self.treeFrame, height=27,
                                     columns=("id","Title","Author","Collection"),
                                     selectmode='browse',
                                     displaycolumns=[0,1,2,3])
@@ -38,7 +40,7 @@ class Biblio(tk.Frame):
         self.view.configure(yscroll=self.ysb.set )
         self.ysb.grid(row=1,column=3,sticky=tk.E+tk.N+tk.S)
         self.view.tag_configure('oddrow', background='black',foreground="white")
-        self.view.tag_configure('evenrow',background='#4D2164', foreground='white')
+        self.view.tag_configure('evenrow',background='#435959', foreground='white')
         self.insert_content(self.tree_data)
 
         # Searchbar
@@ -46,7 +48,7 @@ class Biblio(tk.Frame):
         self.search_entry = tk.Entry(root,bg="gray",bd=2,fg="black",relief=tk.SOLID,font="Consolas 12 bold italic",textvariable=self.searchVar)
         self.search_entry.grid(row=2,column=0,sticky=tk.W+tk.N+tk.E,columnspan=3)
 
-        # search buttons
+        # Search buttons
         self.search_title_button = ttk.Button(root, text='Search title',underline=7, command=self.onClick_title )
         self.search_title_button.grid(row=3,column=0,sticky=tk.W+tk.S+tk.E)
         self.search_author_button = ttk.Button(root,text="Search author",underline=7,command=self.onClick_author)
@@ -54,7 +56,7 @@ class Biblio(tk.Frame):
         self.search_col_button = ttk.Button(root,text="Search publisher",underline=10,command=self.onClick_collection)
         self.search_col_button.grid(row=3,column=2,sticky=tk.W+tk.S+tk.E)
         refresh_icon = tk.PhotoImage(file='reload_page_r.gif')
-        self.load_all = ttk.Button(root,image=refresh_icon,text='Reload',underline=1, command=self.load_all_callback)
+        self.load_all = ttk.Button(root,text='Reload (F5)', command=self.load_all_callback)
         self.load_all.grid(row=4,column=0,sticky=tk.W+tk.S+tk.E)
         self.load_stats = ttk.Button(root, text="Show stats", command=self.onClick_stats)
         self.load_stats.grid(row=4,column=2,sticky=tk.W+tk.S+tk.E)
@@ -166,7 +168,6 @@ class Biblio(tk.Frame):
             self.contextual_menu.tk_popup(event.x_root,event.y_root,0)
         finally:
             self.contextual_menu.grab_release()
-
 
 
 
