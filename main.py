@@ -45,7 +45,7 @@ class Biblio(tk.Frame):
 
         # Searchbar
         self.searchVar = tk.StringVar()
-        self.search_entry = tk.Entry(root,bg="gray",bd=2,fg="black",relief=tk.SOLID,font="Consolas 12 bold italic",textvariable=self.searchVar)
+        self.search_entry = tk.Entry(root,bg="lightgray",bd=2,fg="black",relief=tk.SOLID,font="Consolas 12 bold italic",textvariable=self.searchVar)
         self.search_entry.grid(row=2,column=0,sticky=tk.W+tk.N+tk.E,columnspan=3)
 
         # Search buttons
@@ -62,7 +62,7 @@ class Biblio(tk.Frame):
         self.load_stats.grid(row=4,column=2,sticky=tk.W+tk.S+tk.E)
 
         # Right click contextual menu
-        self.contextual_menu = tk.Menu(root, tearoff=0, activebackground='darkslategray',activeforeground="white",bg="gray8",
+        self.contextual_menu = tk.Menu(root, tearoff=0, activebackground='#690093',activeforeground="white",bg="gray8",
                                        fg="white",font="Verdana 10 bold",relief=tk.FLAT)
         self.contextual_menu.add_command(label="Delete selected book.",command=self.delete_selected)
         self.contextual_menu.add_separator()
