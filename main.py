@@ -40,7 +40,7 @@ class Biblio(tk.Frame):
         self.view.configure(yscroll=self.ysb.set )
         self.ysb.grid(row=1,column=3,sticky=tk.E+tk.N+tk.S)
         self.view.tag_configure('oddrow', background='black',foreground="white")
-        self.view.tag_configure('evenrow',background='#435959', foreground='white')
+        self.view.tag_configure('evenrow',background='#133596', foreground='white')
         self.insert_content(self.tree_data)
 
         # Searchbar
@@ -88,7 +88,7 @@ class Biblio(tk.Frame):
 
 
     def ask_isbn(self, event=None):
-        isbn_nb = simpledialog.askstring(title="Search book by ISBN", prompt="Enter book ISBN")
+        isbn_nb = simpledialog.askstring(title="Search book by ISBN", prompt="ISBN number :")
         if isbn_nb:
             book_data = isbn.get_isbn_ref(isbn_nb)
             if book_data[0] and book_data[1] != "Unknown":
