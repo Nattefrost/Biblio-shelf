@@ -121,8 +121,6 @@ def remove_book(book):
     con.commit()
     con.close()
 
-def update_book():
-    pass
     
 ############################################
 ############# DOING SOME STATS #############

@@ -64,8 +64,6 @@ class Biblio(tk.Frame):
         # Right click contextual menu
         self.contextual_menu = tk.Menu(root, tearoff=0, activebackground='#690093',activeforeground="white",bg="gray8",
                                        fg="white",font="Verdana 10 bold",relief=tk.FLAT)
-        self.contextual_menu.add_command(label="Modify book",command=self.modify_book)
-        self.contextual_menu.add_separator()
         self.contextual_menu.add_command(label="Delete selected book.",command=self.delete_selected)
         self.contextual_menu.add_separator()
         self.contextual_menu.add_command(label="Mark book as read.",command=self.mark_read )
@@ -171,10 +169,7 @@ class Biblio(tk.Frame):
         finally:
             self.contextual_menu.grab_release()
 
-    def modify_book(self):
-        item = self.view.item(self.view.selection()[0], "values")
-        book = {'title': item[0], 'author' : item[1], 'publisher' : item[2], 'is_read' : item[3]}
-        add_dialog.AddDialog(self, book)
+    
 
 
 
