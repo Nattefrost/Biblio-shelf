@@ -45,7 +45,7 @@ class Biblio(tk.Frame):
 
         # Searchbar
         self.searchVar = tk.StringVar()
-        self.search_entry = tk.Entry(root,bg="lightgray",bd=2,fg="black",relief=tk.SOLID,font="Consolas 12 bold italic",textvariable=self.searchVar)
+        self.search_entry = tk.Entry(root, bg="#9DB8AE", bd=1,fg="#280041", relief=tk.SOLID, font="Consolas 12 bold italic",textvariable=self.searchVar)
         self.search_entry.grid(row=2,column=0,sticky=tk.W+tk.N+tk.E,columnspan=3)
 
         # Search buttons
@@ -64,6 +64,8 @@ class Biblio(tk.Frame):
         # Right click contextual menu
         self.contextual_menu = tk.Menu(root, tearoff=0, activebackground='#690093',activeforeground="white",bg="gray8",
                                        fg="white",font="Verdana 10 bold",relief=tk.FLAT)
+        self.contextual_menu.add_command(label="Modify book",command=self.modify_book)
+        self.contextual_menu.add_separator()
         self.contextual_menu.add_command(label="Delete selected book.",command=self.delete_selected)
         self.contextual_menu.add_separator()
         self.contextual_menu.add_command(label="Mark book as read.",command=self.mark_read )
@@ -168,6 +170,12 @@ class Biblio(tk.Frame):
             self.contextual_menu.tk_popup(event.x_root,event.y_root,0)
         finally:
             self.contextual_menu.grab_release()
+
+    def modify_book(self):
+        item = self.view.item(self.view.selection()[0], "values")
+        book = {'title': item[0], 'author' : item[1], 'publisher' : item[2], 'is_read' : item[3]}
+        add_dialog.AddDialog(self, book)
+
 
 
 

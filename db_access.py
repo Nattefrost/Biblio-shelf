@@ -120,6 +120,9 @@ def remove_book(book):
     cur.execute("DELETE FROM books WHERE title='{}';".format(book_title))
     con.commit()
     con.close()
+
+def update_book():
+    pass
     
 ############################################
 ############# DOING SOME STATS #############

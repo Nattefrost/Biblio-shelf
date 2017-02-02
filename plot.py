@@ -51,7 +51,7 @@ class TkPlot:
             self.can.create_rectangle(position, self.CAN_SIZE[0], 
                                       position+20, self.CAN_SIZE[0]-((data[i][1]*20)+160), # Proper setup to scale on canvas/img
                                         fill=chosen_colour) # TODO use CAN_SIZE[1], i'm retarded.
-            tk.Label(self.root, text="{} : {} ".format(data[i][0],data[i][1]),bg=chosen_colour, font="Consolas 7 bold").pack(anchor=tk.N)
+            tk.Label(self.root, text="{} : {} ".format(data[i][0],data[i][1]),bg=chosen_colour, font="Consolas 8 bold").pack(anchor=tk.N)
             position+=40
             i+=1
 

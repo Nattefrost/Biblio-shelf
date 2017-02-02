@@ -5,9 +5,8 @@ from tkinter import ttk
 import db_access
 
 class AddDialog:
-    def __init__(self, parent):
+    def __init__(self, parent, book={}):
         self.root = tk.Tk()
-        self.isReadVar = tk.BooleanVar()
         self.root.eval('tk::PlaceWindow %s center' % self.root.winfo_pathname(self.root.winfo_id()))
         self.parent = parent
         self.root.title("Add a book")
@@ -19,7 +18,7 @@ class AddDialog:
         self.titleVar = tk.StringVar()
         self.authorVar = tk.StringVar()
         self.collectionVar = tk.StringVar()
-
+        self.isReadVar = tk.BooleanVar()
 
         # Entries to add a book
 
@@ -45,6 +44,17 @@ class AddDialog:
 
         self.cancel_btn.grid(column=1,row=4)
         self.validate_btn.grid(column=0,row=4)
+
+        # check if book was passed as arg and act accordingly
+        is_book = book.get("title")
+        if is_book:
+            print(book)
+            self.root.title("Modify book")
+            self.title_entry.insert(0, book['title'])
+            self.author_entry.insert(0, book['author'])
+            self.collection_entry.insert(0, book['publisher'])
+            self.isReadVar.set(True); self.isRead_check.select() if book['is_read'] == '1' else self.isRead_check.deselect()
+            
 
         self.root.mainloop()
 
