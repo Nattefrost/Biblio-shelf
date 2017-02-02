@@ -20,7 +20,9 @@ class Biblio(tk.Frame):
         root.tk.call('wm','iconphoto',root._w, root.windowIcon)
         root['bd'] = 10
         root['relief'] = tk.FLAT
+        root.resizable(0,0)
         root.geometry("850x685")
+        self.PLOT_WINDOW = 0
         self.style = ttk.Style()
         self.style.theme_use('clam')
         self.tree_data = db_access.get_books_to_view()
@@ -55,7 +57,7 @@ class Biblio(tk.Frame):
         self.search_author_button.grid(row=3,column=1,sticky=tk.W+tk.S+tk.E)
         self.search_col_button = ttk.Button(root,text="Search publisher",underline=10,command=self.onClick_collection)
         self.search_col_button.grid(row=3,column=2,sticky=tk.W+tk.S+tk.E)
-        refresh_icon = tk.PhotoImage(file='reload_page_r.gif')
+        #refresh_icon = tk.PhotoImage(file='reload_page_r.gif')
         self.load_all = ttk.Button(root,text='Reload (F5)', command=self.load_all_callback)
         self.load_all.grid(row=4,column=0,sticky=tk.W+tk.S+tk.E)
         self.load_stats = ttk.Button(root, text="Show stats", command=self.onClick_stats)
@@ -125,7 +127,9 @@ class Biblio(tk.Frame):
     def onClick_collection(self, event=None):
         self.search_start(2)
     def onClick_stats(self, event=None):
-        plot.TkPlot(stats.generate_authors_top_ten())
+        if not self.PLOT_WINDOW:
+            self.PLOT_WINDOW +=1
+            plot.TkPlot(stats.generate_authors_top_ten(), self)
     def load_all_callback(self,event=None):
         self.clean_tree()
         self.tree_data = db_access.get_books_to_view()
