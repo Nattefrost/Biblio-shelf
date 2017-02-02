@@ -57,7 +57,6 @@ class Biblio(tk.Frame):
         self.search_author_button.grid(row=3,column=1,sticky=tk.W+tk.S+tk.E)
         self.search_col_button = ttk.Button(root,text="Search publisher",underline=10,command=self.onClick_collection)
         self.search_col_button.grid(row=3,column=2,sticky=tk.W+tk.S+tk.E)
-        #refresh_icon = tk.PhotoImage(file='reload_page_r.gif')
         self.load_all = ttk.Button(root,text='Reload (F5)', command=self.load_all_callback)
         self.load_all.grid(row=4,column=0,sticky=tk.W+tk.S+tk.E)
         self.load_stats = ttk.Button(root, text="Show stats", command=self.onClick_stats)

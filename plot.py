@@ -20,7 +20,6 @@ class TkPlot:
         self.CELLS_SIZE = 20
         self.can = tk.Canvas(self.root, bg = 'white',width=600,height=450)
         self.can.pack()
-        #self.root.overrideredirect(1)
         self.draw_grid()
         self.draw_chart(self.data)
         self.root.protocol("WM_DELETE_WINDOW", self.ask_quit)
