@@ -15,13 +15,15 @@ import math
 class Biblio(tk.Frame):
     def __init__(self, root ):
         tk.Frame.__init__(self, root)
+        #root.attributes("-fullscreen", True) 
         root['bg'] = 'lightgray'
         root.windowIcon = tk.PhotoImage("photo", file="./book_icon.gif") # setting icon
         root.tk.call('wm','iconphoto',root._w, root.windowIcon)
         root['bd'] = 10
         root['relief'] = tk.FLAT
-        root.resizable(0,0)
-        root.geometry("850x685")
+        root.resizable(1,1)
+        #root.geometry("850x685")
+        root.geometry("1024x768")
         self.PLOT_WINDOW = 0
         self.style = ttk.Style()
         self.style.theme_use('clam')
