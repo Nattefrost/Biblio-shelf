@@ -5,7 +5,9 @@ from pyzbar import pyzbar
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 model = torch.hub.load('ultralytics/yolov5', 'custom',path='model.pt').to(device)
 
-cap = cv2.VideoCapture(0) #cv2.CAP_DSHOW)
+cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
 while cap.isOpened():
   _, frame = cap.read()
   results = model(frame)
