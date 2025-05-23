@@ -1,2 +1,12 @@
 flask
 manubot
+mneia-isbn
+opencv-python>=4.6.0
+opencv-contrib-python
+opencv-python-headless
+pyzbar
+pyzbar[scripts]
+pyperclip
+torch
+pandas
+seaborn
