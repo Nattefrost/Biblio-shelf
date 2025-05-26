@@ -178,7 +178,9 @@ class Biblio(tk.Frame):
             self.contextual_menu.grab_release()
 
     def onClick_scan_barcode(self, event=None):
-        barcode_reader.scan_barcode(0)
+        isbn_list = barcode_reader.scan_barcode(0)
+        for isbn_nb in isbn_list:
+          db_access.insert_isbn(isbn_nb)
 
     
 

@@ -121,14 +121,13 @@ def remove_book(book):
     con.commit()
     con.close()
 
-
 def insert_isbn(isbn_nb):
     con = None
     path = './books.db'
     con = lite.connect(path)
     cur = con.cursor()
-    #cur.execute('INSERT INTO books(title, editor_id, author_id, read) VALUES(?,?,?,?)', (title, editor, author, read) )
-    cur.execute('INSERT INTO ISBN(isbn) VALUES(?);', (isbn_nb) )
+    #cur.execute('INSERT INTO books(title, editor_id, author_id, read) VALUES(?,?,?,?)', (title, editor, author, read) 
+    cur.execute("INSERT INTO ISBN(isbn) VALUES({})".format(isbn_nb)) 
     con.commit()
     con.close()
 ############################################

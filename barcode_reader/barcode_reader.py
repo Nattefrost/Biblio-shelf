@@ -74,7 +74,8 @@ def scan_barcode(device_id=0):
       cv2.destroyAllWindows()
       scanned_barcodes_list = serialize_sets(scanned_barcodes)
       serialize_codes_to_file(scanned_barcodes_list)
-      break
+      return scanned_barcodes_list
+
 
 
 
