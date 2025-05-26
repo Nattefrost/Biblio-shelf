@@ -6,11 +6,11 @@ from tkinter import ttk
 from tkinter import simpledialog
 from tkinter import messagebox
 import find_book_ISBN as isbn
+import math
 import add_dialog
 import plot
 import stats
-import math
-
+from barcode_reader import barcode_reader
 
 class Biblio(tk.Frame):
     def __init__(self, root ):
@@ -59,6 +59,8 @@ class Biblio(tk.Frame):
         self.search_author_button.grid(row=3,column=1,sticky=tk.W+tk.S+tk.E)
         self.search_col_button = ttk.Button(root,text="Search publisher",underline=10,command=self.onClick_collection)
         self.search_col_button.grid(row=3,column=2,sticky=tk.W+tk.S+tk.E)
+        self.scan_barcode_button = ttk.Button(root,text="Scan barcode",underline=5,command=self.onClick_scan_barcode)
+        self.scan_barcode_button.grid(row=4,column=1,sticky=tk.W+tk.S+tk.E)
         self.load_all = ttk.Button(root,text='Reload (F5)', command=self.load_all_callback)
         self.load_all.grid(row=4,column=0,sticky=tk.W+tk.S+tk.E)
         self.load_stats = ttk.Button(root, text="Show stats", command=self.onClick_stats)
@@ -82,6 +84,7 @@ class Biblio(tk.Frame):
         root.bind('<Control-o>', self.load_all_callback )
         root.bind('<Control-a>', self.onClick_author )
         root.bind('<Control-l>', self.onClick_collection)
+        root.bind('<Control-b>', self.onClick_scan_barcode)
         root.bind('<F2>', self.ask_isbn)
         root.bind('<F1>', self.add_book_window)
         root.bind('<F5>', self.load_all_callback)
@@ -173,6 +176,9 @@ class Biblio(tk.Frame):
             self.contextual_menu.tk_popup(event.x_root,event.y_root,0)
         finally:
             self.contextual_menu.grab_release()
+
+    def onClick_scan_barcode(self, event=None):
+        barcode_reader.scan_barcode(0)
 
     
 
