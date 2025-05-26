@@ -34,10 +34,7 @@ def get_isbn_ref(isbn):
     return (title.capitalize(), author.capitalize(), publisher.capitalize())
 
 def get_book_by_isbn(isbn):
-    isbn_string = "isbn:{}".format(isbn)
+    isbn_string = "isbn:{0}".format(isbn)
     result = subprocess.run(['manubot', 'cite', isbn_string ], stdout=subprocess.PIPE)
     book_ref = json.loads(result.stdout.decode('utf-8'))
-    print(type(book_ref))
-    print(type(book_ref[0]))
-    time.sleep(50)
     return book_ref[0]

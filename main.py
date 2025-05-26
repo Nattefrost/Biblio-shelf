@@ -99,11 +99,12 @@ class Biblio(tk.Frame):
         if isbn_nb:
             book_data = isbn.get_book_by_isbn(isbn_nb)
             print(book_data)
-            if 'publisher' not in book_data:
-                book_data['publisher'] = "Unknown"
-                res = messagebox.askquestion("Add this book ?","\nTitle : {} \nAuthor : {} \nPublisher : {} ".format(book_data[0]['title'],book_data[0]['author']['family'], book_data[0]['publisher']) )
+            if 'publisher' in book_data:
+                author_name = "{} {}".format(book_data['author'][0]['family'], book_data['author'][0]['given'])
+                #book_data['publisher'] = "Unknown"
+                res = messagebox.askquestion("Add this book ?","\nTitle : {} \nAuthor : {} \nPublisher : {}\nISBN : {} ".format(book_data['title'], author_name, book_data['publisher'], book_data['ISBN']) )
                 if res == "yes":
-                    db_access.add_book(book_data['title'], book_data['author']['family'],book_data['publisher'], False)
+                    db_access.add_book(book_data['title'], author_name ,book_data['publisher'], book_data['ISBN'] ,False)
                     self.load_all_callback()
             else:
                 messagebox.showerror("Book not found", """Could not find the book. \nPlease enter full book references""")
@@ -186,9 +187,6 @@ class Biblio(tk.Frame):
           db_access.insert_isbn(isbn_nb)
 
     
-
-
-
 
 
 if __name__ == "__main__":

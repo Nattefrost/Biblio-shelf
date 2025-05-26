@@ -29,10 +29,11 @@ def get_books_to_view():
     con.close()
     return all_books
 
-def add_book(title, author, editor, read):
+def add_book(title, author, editor, read, isbn):
     con = None
     id_ed = editor_exists(editor)
     id_au = author_exists(author)
+    isbn = isbn
     # CHECKING IF EDITOR AND AUTHOR DONT ALREADY EXIST IN DB
     if id_ed:
         editor = id_ed[0][0]
@@ -47,7 +48,7 @@ def add_book(title, author, editor, read):
     path = './books.db'
     con = lite.connect(path)
     cur = con.cursor()
-    cur.execute('INSERT INTO books(title, editor_id, author_id, read) VALUES(?,?,?,?)', (title, editor, author, read) )
+    cur.execute('INSERT INTO books(title, editor_id, author_id, read, isbn) VALUES(?,?,?,?,?)', (title, editor, author, read, isbn) )
     con.commit()
     con.close()
 
