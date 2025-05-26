@@ -1,6 +1,7 @@
 __author__ = 'Nattefrost'
 
 import tkinter as tk
+import db_creation
 import db_access
 from tkinter import ttk
 from tkinter import simpledialog
@@ -92,18 +93,20 @@ class Biblio(tk.Frame):
         root.mainloop()
 
 
-
+  # TODO check keys in json
     def ask_isbn(self, event=None):
         isbn_nb = simpledialog.askstring(title="Search book by ISBN", prompt="ISBN number :")
         if isbn_nb:
             book_data = isbn.get_book_by_isbn(isbn_nb)
-            if book_data[0] and book_data[1] != "Unknown":
-                res = messagebox.askquestion("Add this book ?","\nTitle : {} \nAuthor : {} \nPublisher : {} ".format(book_data[0],book_data[1], book_data[2]) )
+            print(book_data)
+            if 'publisher' not in book_data:
+                book_data['publisher'] = "Unknown"
+                res = messagebox.askquestion("Add this book ?","\nTitle : {} \nAuthor : {} \nPublisher : {} ".format(book_data[0]['title'],book_data[0]['author']['family'], book_data[0]['publisher']) )
                 if res == "yes":
-                    db_access.add_book(book_data[0],book_data[1],book_data[2],0)
+                    db_access.add_book(book_data['title'], book_data['author']['family'],book_data['publisher'], False)
                     self.load_all_callback()
             else:
-                messagebox.showerror("Book not found", """Google books could not find the book. \nPlease enter full book references""")
+                messagebox.showerror("Book not found", """Could not find the book. \nPlease enter full book references""")
 
 
 
@@ -189,6 +192,7 @@ class Biblio(tk.Frame):
 
 
 if __name__ == "__main__":
+    db_creation.check_db_exists()
     root = tk.Tk()
     root.title("Biblio")
     app = Biblio(root)

@@ -106,7 +106,7 @@ def mark_read(title):
     path = './books.db'
     con = lite.connect(path)
     cur = con.cursor()
-    sql = 'UPDATE books SET read = 1 WHERE title = "{}";'.format(title)
+    sql = 'UPDATE books SET read = True WHERE title = "{}";'.format(title)
     cur.execute(sql)
     con.commit()
     con.close()

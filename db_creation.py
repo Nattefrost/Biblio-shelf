@@ -22,12 +22,12 @@ def create_db():
     c.execute("CREATE TABLE Authors(id INTEGER PRIMARY KEY AUTOINCREMENT, author TEXT NOT NULL UNIQUE)")
     c.execute("CREATE TABLE Editors(id INTEGER PRIMARY KEY AUTOINCREMENT, editor TEXT NOT NULL UNIQUE)")
     c.execute("CREATE TABLE Books(id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, read INT NOT NULL, "
-              "author_id INT NOT NULL, editor_id INT NOT NULL, "
+              "author_id INT NOT NULL, editor_id INT NOT NULL, isbn_id INT NOT NULL,"
               "FOREIGN KEY(author_id) REFERENCES Authors(id),"
-              "FOREIGN KEY(editor_id) REFERENCES Editors(id) )")
+              "FOREIGN KEY(editor_id) REFERENCES Editors(id)," 
+              "FOREIGN KEY(isbn_id) REFERENCES ISBN(id) )")
     c.execute("CREATE TABLE ISBN(id INTEGER PRIMARY KEY AUTOINCREMENT, isbn INTEGER UNIQUE)")
     c.execute("INSERT INTO Editors VALUES('0', 'Unknown') ")
     con.commit()
     con.close()
 
-check_db_exists()
