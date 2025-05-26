@@ -25,7 +25,7 @@ def create_db():
               "author_id INT NOT NULL, editor_id INT NOT NULL, "
               "FOREIGN KEY(author_id) REFERENCES Authors(id),"
               "FOREIGN KEY(editor_id) REFERENCES Editors(id) )")
-
+    c.execute("CREATE TABLE ISBN(id INTEGER PRIMARY KEY AUTOINCREMENT, isbn INTEGER UNIQUE)")
     c.execute("INSERT INTO Editors VALUES('0', 'Unknown') ")
     con.commit()
     con.close()

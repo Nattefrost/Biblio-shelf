@@ -6,6 +6,7 @@ __author__ = 'Nattefrost'
 import urllib.request
 import json
 import re
+import subprocess
 
 
 
@@ -31,3 +32,10 @@ def get_isbn_ref(isbn):
         publisher = "Unknown"
 
     return (title.capitalize(), author.capitalize(), publisher.capitalize())
+
+def get_book_by_isbn(isbn):
+    isbn_string = "isbn:{}".format(isbn)
+    result = subprocess.run(['manubot', 'cite', isbn_string ], stdout=subprocess.PIPE)
+    book_ref = json.loads(result.stdout.decode('utf-8'))
+    print(book_ref)
+    

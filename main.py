@@ -96,7 +96,7 @@ class Biblio(tk.Frame):
     def ask_isbn(self, event=None):
         isbn_nb = simpledialog.askstring(title="Search book by ISBN", prompt="ISBN number :")
         if isbn_nb:
-            book_data = isbn.get_isbn_ref(isbn_nb)
+            book_data = isbn.get_book_by_isbn(isbn_nb)
             if book_data[0] and book_data[1] != "Unknown":
                 res = messagebox.askquestion("Add this book ?","\nTitle : {} \nAuthor : {} \nPublisher : {} ".format(book_data[0],book_data[1], book_data[2]) )
                 if res == "yes":
